@@ -4,26 +4,28 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import {MainPage} from 'component/homepage'
 import {SideBar} from 'component/sidebar'
 import { Header } from 'component/header';
-import {Test} from 'component/Test'
 import {Container,Row,Col } from 'react-bootstrap'
 import { Route, Routes } from "react-router";
-import {useUrlQueryParam} from 'utils/url'
-import { useState,useEffect } from 'react';
+import { useState,useEffect} from 'react';
+import { useUrlQueryParam } from 'utils/url';
 import axios from 'axios';
 import {Datatype} from 'utils/type'
 library.add(fas)
 
 function App() {
-  const [param, setParam] = useUrlQueryParam(["newsSearch"]);
+  const [param,setParam] = useUrlQueryParam(['country'])
+  // 這不是一個props就可以解決的?
   const [news, setNews] = useState('')
   const [data,setData] = useState<Datatype[]|null>(null)
   const onHandleNews = (val:string)=>{
     console.log(val)
-
+    setNews(val)
+    setParam({country:val})
   }
   useEffect(()=>{
-    axios.get("http://localhost:3001/articles").then(({data})=>setData(data))
-  },[])
+    axios.get(`http://localhost:3001/articles?country=${param.country}`).then(({data})=>{setData(data);})
+    console.log("@")
+  },[param])
   return (
     <div className="App">
       <Container>
@@ -37,12 +39,7 @@ function App() {
           </Col>
           <Col md='10'> 
           <Routes>
-            <Route path='news' element={<MainPage data={data || []} />} ></Route>
-            <Route path='tw' element={<Test />}></Route>
-            <Route path='cn' element={<Test />}></Route>
-            <Route path='global' element={<Test />}></Route>
-            <Route path='entertain' element={<Test />}></Route>
-            <Route path='business' element={<Test />}></Route>
+            <Route path='/:id' element={<MainPage data={data || []} />} ></Route>
             <Route index element={<MainPage data={data || []} />} />
           </Routes>
           </Col>

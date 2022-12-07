@@ -11,7 +11,7 @@ export const useProject = (param:string) =>{
 }
 
 export const Header = () =>{
-    const [param, setParam] = useUrlQueryParam(["newsSearch"]);
+    const [, setParam] = useUrlQueryParam(["country"]);
     // const {data} = useProject(useDebounce(param.newsSearch,1000))
-    return <input onChange={(e)=>setParam({newsSearch:e.target.value})}></input>
+    return <input onChange={(e)=>setParam({country:e.target.value})}></input>
 }

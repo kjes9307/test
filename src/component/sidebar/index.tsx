@@ -1,6 +1,5 @@
 import {FC} from 'react'
 import Icon from 'component/Icon';
-import {useState} from 'react'
 import {IconName} from '@fortawesome/fontawesome-common-types';
 import { Link } from 'react-router-dom';
 type SideBarDataProps =  {
@@ -22,7 +21,7 @@ export const SideBar:FC<SideBarDataProps> = (props) =>{
                 
                 <li key={i.name} className='mt-1 d-flex align-items-center justify-content-center'>
                     <div><Icon icon={i.icon} color='black' size='1x' /></div>
-                    <Link onClick={()=>onChange(i.routes)} to={i.routes}>{i.name}</Link>
+                    <p onClick={()=>{onChange(i.routes);}}>{i.name}</p>
                 </li>
                 
             )})}
