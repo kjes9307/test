@@ -1,22 +1,11 @@
-import {useEffect,useState} from 'react'
-import axios from 'axios';
+import {FC} from 'react'
 import {Container,Row,Col,Card } from 'react-bootstrap'
-import moment from 'moment'
-type Datatype = {
-    author : string
-    title : string
-    desc : string
-    urlToImage: string
-    // source:{id:unknown , name:string}
-    registered:Date,
-    source:string
-  }
-
-export const MainPage =() =>{
-  const [data,setData] = useState<Datatype[]|null>(null)
-  useEffect(()=>{
-    axios.get("http://localhost:3001/articles").then(({data})=>setData(data))
-  },[])
+import {Datatype} from 'utils/type'
+type DataProps =  {
+  data : Datatype[]
+}
+export const MainPage:FC<DataProps> =(props) =>{
+  const {data}  = props;
   return (
     <Container>
         <Row>

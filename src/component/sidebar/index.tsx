@@ -1,10 +1,13 @@
+import {FC} from 'react'
 import Icon from 'component/Icon';
 import {useState} from 'react'
 import {IconName} from '@fortawesome/fontawesome-common-types';
 import { Link } from 'react-router-dom';
-
-export const SideBar = () =>{
-    const [colapse,setColapse] = useState(false)
+type SideBarDataProps =  {
+    onChange: (val:string)=> void
+  }
+export const SideBar:FC<SideBarDataProps> = (props) =>{
+    const {onChange} = props
     let array:{name:string,icon:IconName,routes:string}[] = [
         {routes:"news",name:'熱門報導',icon:'envelope'},
         {routes:"tw",name:'台灣',icon:"envelope"},
@@ -19,7 +22,7 @@ export const SideBar = () =>{
                 
                 <li key={i.name} className='mt-1 d-flex align-items-center justify-content-center'>
                     <div><Icon icon={i.icon} color='black' size='1x' /></div>
-                    <Link to={i.routes}>{i.name}</Link>
+                    <Link onClick={()=>onChange(i.routes)} to={i.routes}>{i.name}</Link>
                 </li>
                 
             )})}
