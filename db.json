@@ -1,0 +1,67 @@
+{
+    "posts": [
+      { "id": 1, "title": "json-server", "author": "typicode" }
+    ],
+    "comments": [
+      { "id": 1, "body": "some comment", "postId": 1 }
+    ],
+    "profile": { "name": "typicode" },
+    "articles": [
+      {
+        "_id": "63904dca0b9824c53d1ca322",
+        "author": "Doris Caldwell",
+        "desc": "jordan air force relaseras",
+        "source": "BTV",
+        "registered": "2015-10-12T03:40:19 -08:00",
+        "country": "cn"
+      },
+      {
+        "_id": "63904dcadf973a70763972a5",
+        "author": "Velazquez Diaz",
+        "desc": "NBA is now on fire",
+        "source": "NBA TV ",
+        "registered": "2018-07-06T07:37:30 -08:00",
+        "country": "tw"
+      },
+      {
+        "_id": "63904dca83540f5e5cd4c8f2",
+        "author": "Diana Griffin",
+        "desc": "Lunch box contain..",
+        "source": "BTV",
+        "registered": "2015-04-21T12:51:42 -08:00",
+        "country": "tw"
+      },
+      {
+        "_id": "63904dca56c4041a4282b75f",
+        "author": "Turner Pearson",
+        "desc": "Prulepwo Win Against EOpwe",
+        "source": "BTV",
+        "registered": "2020-11-05T07:44:44 -08:00",
+        "country": "cn"
+      },
+      {
+        "_id": "63904dcac5661a5f95ae94d7",
+        "author": "Burns Mayer",
+        "desc": "Biggest Sell assciation",
+        "source": "CTV",
+        "registered": "2018-09-26T05:22:24 -08:00",
+        "country": "cn"
+      },
+      {
+        "_id": "63904dca15c8e97f9fcc1283",
+        "author": "Sallie Warner",
+        "desc": "Best Price to purchase",
+        "source": "ATV",
+        "registered": "2019-06-04T02:43:24 -08:00",
+        "country": "cn"
+      },
+      {
+        "_id": "63904dca40897bc48af67c63",
+        "author": "Hess Burch",
+        "desc": "Elon mush has been..",
+        "source": "ETV",
+        "registered": "2015-12-12T08:44:46 -08:00",
+        "country": "cn"
+      }
+    ]
+  }

@@ -1,0 +1,15 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "./base/customereset";
+@import "./abstracts/selfclass";
+@import "./layout/aside";
+@import "./component/card";
+@import "./component/icon";
+$utilities: map-merge(
+  $utilities, (
+    "font-size": map-merge(
+      map-get($utilities, "font-size"),
+      ( responsive: true ),
+    ),
+  )
+);
