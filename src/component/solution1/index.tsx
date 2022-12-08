@@ -1,6 +1,6 @@
 import { useState,useEffect} from 'react';
 import { Route, Routes } from "react-router";
-import { useNavigate ,Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import axios from 'axios';
 import { useUrlQueryParam } from 'utils/url';
 import {Datatype} from 'utils/type'

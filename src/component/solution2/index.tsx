@@ -4,7 +4,6 @@ import {useSelector,useAppDispatch} from 'redux/hook'
 import { Route, Routes } from "react-router";
 import { Link , Navigate } from 'react-router-dom';
 import Icon from 'component/Icon';
-import { useUrlQueryParam } from 'utils/url';
 import {IconName} from '@fortawesome/fontawesome-common-types';
 import {Container,Row,Col,Card } from 'react-bootstrap'
 import {Datatype} from 'utils/type'
@@ -14,7 +13,10 @@ type DataProps =  {
 type SideBarDataProps =  {
     onChange: (val:string)=> void
   }
-export const SideBar:FC<SideBarDataProps> = (props) =>{
+const Header = () =>{
+  return <input></input>
+}
+const SideBar:FC<SideBarDataProps> = (props) =>{
     const {onChange} = props
     let array:{name:string,icon:IconName,routes:string}[] = [
         {routes:"/articles?country=news",name:'熱門報導',icon:'envelope'},
@@ -37,7 +39,7 @@ export const SideBar:FC<SideBarDataProps> = (props) =>{
         </ul>
     )
 }
-export const MainPage:FC<DataProps> =(props) =>{
+const MainPage:FC<DataProps> =(props) =>{
     const {data}  = props;
     return (
       <Container>
@@ -68,7 +70,6 @@ export const MainPage:FC<DataProps> =(props) =>{
     )
   }
 export const Sol2 = () =>{
-    const [params] = useUrlQueryParam(['country'])
     const loading = useSelector(state=>state.dataList.loading)
     const list = useSelector(state=>state.dataList.list)
     const endStr = useSelector(state=>state.dataList.endStr)
@@ -80,19 +81,21 @@ export const Sol2 = () =>{
   
     useEffect(()=>{
         console.log("@")
-        if(params&&params.country !==''){
-          let str= `http://localhost:3001/articles?country=${params.country}`
-          dispatch(getListData(str))
-          return
-        }
+        // if(params&&params.country !==''){
+        //   let str= `http://localhost:3001/articles?country=${params.country}`
+        //   dispatch(listSlice.actions.onChangeNav(params.country))
+        //   dispatch(getListData(str))
+        //   return
+        // }
         let str= !endStr?`http://localhost:3001/articles`:`http://localhost:3001/articles?country=${endStr}`
         dispatch(getListData(str))
-    },[endStr])
+    },[endStr,dispatch])
     if(loading){
         return <h1>....loading</h1>
     }
     return (
         <Container>
+          <Header />
         <Row>
           <Col md='2'>
           <SideBar onChange={onHandleNews}/>
