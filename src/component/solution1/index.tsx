@@ -1,4 +1,5 @@
 import { useState,useEffect} from 'react';
+import { Route, Routes } from "react-router";
 import axios from 'axios';
 import { useUrlQueryParam } from 'utils/url';
 import {Datatype} from 'utils/type'
@@ -6,7 +7,7 @@ import {Container,Row,Col } from 'react-bootstrap'
 import {MainPage} from 'component/homepage'
 import {SideBar} from 'component/sidebar'
 import { Header } from 'component/header';
-import { Route, Routes } from "react-router";
+
 export const Sol = () =>{
     const [param,setParam] = useUrlQueryParam(['country'])
     // 這不是一個props就可以解決的?

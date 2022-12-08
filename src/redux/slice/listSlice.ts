@@ -5,12 +5,14 @@ import {Datatype} from 'utils/type'
 interface ListState{
     list : Datatype[],
     loading: boolean,
-    error: string|null
+    error: string|null,
+    endStr:string
 }
 const initialState:ListState ={
     loading: false,
     error: null,
-    list:[]
+    list:[],
+    endStr:''
 }
 export const getListData = createAsyncThunk(
     'list/getData',
@@ -23,7 +25,11 @@ export const getListData = createAsyncThunk(
 export const listSlice = createSlice({
     name:"dataList",
     initialState,
-    reducers:{},
+    reducers:{
+        onChangeNav:(state,action)=>{
+            state.endStr = action.payload
+        }
+    },
     extraReducers:{
         // createAsyncThunk的name+ 三種狀態
         [getListData.pending.type]:(state)=>{

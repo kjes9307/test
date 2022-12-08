@@ -1,7 +1,6 @@
 import {FC} from 'react'
 import Icon from 'component/Icon';
 import {IconName} from '@fortawesome/fontawesome-common-types';
-import { Link } from 'react-router-dom';
 type SideBarDataProps =  {
     onChange: (val:string)=> void
   }

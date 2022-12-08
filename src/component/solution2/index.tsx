@@ -1,28 +1,97 @@
-import {useEffect} from 'react'
+import {useEffect,FC} from 'react'
 import {getListData} from 'redux/slice/listSlice'
 import {useSelector,useAppDispatch} from 'redux/hook'
+import { Route, Routes } from "react-router";
 import { useUrlQueryParam } from 'utils/url';
+import Icon from 'component/Icon';
+import {IconName} from '@fortawesome/fontawesome-common-types';
+import {Container,Row,Col,Card } from 'react-bootstrap'
+import {Datatype} from 'utils/type'
+type DataProps =  {
+  data : Datatype[]
+}
+type SideBarDataProps =  {
+    onChange: (val:string)=> void
+  }
+export const SideBar:FC<SideBarDataProps> = (props) =>{
+    const {onChange} = props
+    let array:{name:string,icon:IconName,routes:string}[] = [
+        {routes:"news",name:'熱門報導',icon:'envelope'},
+        {routes:"tw",name:'台灣',icon:"envelope"},
+        {routes:"cn",name:"中國",icon:"envelope"},
+        {routes:"global",name:"全球",icon:"envelope"},
+        {routes:"entertain",name:"娛樂",icon:"envelope"},
+        {routes:"business",name:"商業",icon:"envelope"}
+    ]
+    return ( 
+        <ul className={`sidebar list-unstyled border border-black`}>
+            {array?.map(i=>{return(
+                
+                <li key={i.name} className='mt-1 d-flex align-items-center justify-content-center'>
+                    <div><Icon icon={i.icon} color='black' size='1x' /></div>
+                    <p onClick={()=>{onChange(i.routes);}}>{i.name}</p>
+                </li>
+                
+            )})}
+        </ul>
+    )
+}
+export const MainPage:FC<DataProps> =(props) =>{
+    const {data}  = props;
+    return (
+      <Container>
+          <Row>
+        {data?.map((x,id)=>{
+          return (
+            <Col md='4' key={id}>
+            <Card className='card mt-2'>
+              <Card.Img variant="top" src="https://fakeimg.pl/250x100/" />
+              <Card.Body>
+                <Card.Title>{x.title}</Card.Title>
+                <Card.Text>
+                {x.desc} 
+                </Card.Text>
+                <Card.Text>
+                {x.source} 
+                </Card.Text>
+                <Card.Footer>
+                <span>{x.author}</span>
+                </Card.Footer>
+              </Card.Body>
+            </Card>
+           </Col>
+          )
+        })}
+        </Row>
+        </Container>
+    )
+  }
 export const Sol2 = () =>{
-    const [param,setParam] = useUrlQueryParam(['country'])
     const loading = useSelector(state=>state.dataList.loading)
-    const error = useSelector(state=>state.dataList.error)
     const list = useSelector(state=>state.dataList.list)
     const dispatch = useAppDispatch()   
+    const onHandleNews = (val:string)=>{
+    }
     useEffect(()=>{
         let str= `http://localhost:3001/articles`
-        if(param.country) str+=`?country=${param.country}`
         dispatch(getListData(str))
     },[])
     if(loading){
         return <h1>....loading</h1>
     }
     return (
-        <div>
-            {
-                list && list?.map(x=>{
-                    return <li key={x.author}>{x.source}</li>
-                })
-            }
-        </div>
+        <Container>
+        <Row>
+          <Col md='2'>
+          <SideBar onChange={onHandleNews}/>
+          </Col>
+          <Col md='10'> 
+          <Routes>
+            <Route path='/:id' element={<MainPage data={list || []} />} ></Route>
+            <Route index element={<MainPage data={list || []} />} />
+          </Routes>
+          </Col>
+        </Row>
+      </Container>
     )
 }
