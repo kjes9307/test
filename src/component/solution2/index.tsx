@@ -2,7 +2,7 @@ import {useEffect,FC} from 'react'
 import {listSlice,getListData} from 'redux/slice/listSlice'
 import {useSelector,useAppDispatch} from 'redux/hook'
 import { Route, Routes } from "react-router";
-import { Link } from 'react-router-dom';
+import { Link , Navigate } from 'react-router-dom';
 import Icon from 'component/Icon';
 import { useUrlQueryParam } from 'utils/url';
 import {IconName} from '@fortawesome/fontawesome-common-types';
@@ -17,12 +17,12 @@ type SideBarDataProps =  {
 export const SideBar:FC<SideBarDataProps> = (props) =>{
     const {onChange} = props
     let array:{name:string,icon:IconName,routes:string}[] = [
-        {routes:"news",name:'熱門報導',icon:'envelope'},
-        {routes:"tw",name:'台灣',icon:"envelope"},
-        {routes:"cn",name:"中國",icon:"envelope"},
-        {routes:"global",name:"全球",icon:"envelope"},
-        {routes:"entertain",name:"娛樂",icon:"envelope"},
-        {routes:"business",name:"商業",icon:"envelope"}
+        {routes:"/articles?country=news",name:'熱門報導',icon:'envelope'},
+        {routes:"/articles?country=tw",name:'台灣',icon:"envelope"},
+        {routes:"/articles?country=cn",name:"中國",icon:"envelope"},
+        {routes:"/articles?country=global",name:"全球",icon:"envelope"},
+        {routes:"/articles?country=entertain",name:"娛樂",icon:"envelope"},
+        {routes:"/articles?country=business",name:"商業",icon:"envelope"}
     ]
     return ( 
         <ul className={`sidebar list-unstyled border border-black`}>
@@ -30,7 +30,7 @@ export const SideBar:FC<SideBarDataProps> = (props) =>{
                 
                 <li key={i.name} className='mt-1 d-flex align-items-center justify-content-center'>
                     <div><Icon icon={i.icon} color='black' size='1x' /></div>
-                    <Link to={i.routes} onClick={()=>{onChange(i.routes);}}>{i.name}</Link>
+                    <Link to={`${i.routes}`} onClick={()=>{onChange(i.routes);}}>{i.name}</Link>
                 </li>
                 
             )})}
@@ -68,17 +68,23 @@ export const MainPage:FC<DataProps> =(props) =>{
     )
   }
 export const Sol2 = () =>{
+    const [params] = useUrlQueryParam(['country'])
     const loading = useSelector(state=>state.dataList.loading)
     const list = useSelector(state=>state.dataList.list)
     const endStr = useSelector(state=>state.dataList.endStr)
-    const [param] = useUrlQueryParam(['country'])
-    console.log(param)
     const dispatch = useAppDispatch()   
     const onHandleNews = (val:string)=>{
-      console.log("@")
-      dispatch(listSlice.actions.onChangeNav(val))
+      let value =val.split('=')[1]
+      dispatch(listSlice.actions.onChangeNav(value))
     }
+  
     useEffect(()=>{
+        console.log("@")
+        if(params&&params.country !==''){
+          let str= `http://localhost:3001/articles?country=${params.country}`
+          dispatch(getListData(str))
+          return
+        }
         let str= !endStr?`http://localhost:3001/articles`:`http://localhost:3001/articles?country=${endStr}`
         dispatch(getListData(str))
     },[endStr])
@@ -93,8 +99,8 @@ export const Sol2 = () =>{
           </Col>
           <Col md='10'> 
           <Routes>
-            <Route path='/:id' element={<MainPage data={list || []} />} ></Route>
-            <Route index element={<MainPage data={list || []} />} />
+            <Route path='articles' element={<MainPage data={list || []} />} ></Route>
+            <Route index element={<Navigate to="articles" replace={true} />} />
           </Routes>
           </Col>
         </Row>
