@@ -6,7 +6,8 @@ interface ListState{
     list : Datatype[],
     loading: boolean,
     error: string|null,
-    endStr:string
+    endStr:string,
+    
 }
 const initialState:ListState ={
     loading: false,
@@ -15,6 +16,13 @@ const initialState:ListState ={
     endStr:''
 }
 export const getListData = createAsyncThunk(
+    'list/getData',
+    async (url:string) =>{
+        const {data} = await axios.get(url)
+        return data 
+    }
+)
+export const searchList = createAsyncThunk(
     'list/getData',
     async (url:string) =>{
         const {data} = await axios.get(url)
@@ -40,6 +48,18 @@ export const listSlice = createSlice({
             state.list = action.payload
         },
         [getListData.rejected.type]:(state,action:PayloadAction<string|null>)=>{
+            state.loading = false
+            state.error = action.payload
+        },
+        [searchList.pending.type]:(state)=>{
+            state.loading = true
+        },
+        [searchList.fulfilled.type]:(state,action)=>{
+            state.loading = false
+            state.error = null
+            state.list = action.payload
+        },
+        [searchList.rejected.type]:(state,action:PayloadAction<string|null>)=>{
             state.loading = false
             state.error = action.payload
         }

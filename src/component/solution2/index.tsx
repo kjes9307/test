@@ -14,7 +14,12 @@ type SideBarDataProps =  {
     onChange: (val:string)=> void
   }
 const Header = () =>{
-  return <input></input>
+  const endStr = useSelector(state=>state.dataList.endStr)
+  const dispatch = useAppDispatch() 
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    dispatch(listSlice.actions.onChangeNav(e.currentTarget.value))
+  }
+  return <input value={endStr} onChange = {handleChange}></input>
 }
 const SideBar:FC<SideBarDataProps> = (props) =>{
     const {onChange} = props
