@@ -23,7 +23,7 @@ export const getListData = createAsyncThunk(
     }
 )
 export const searchList = createAsyncThunk(
-    'list/getData',
+    'list/searchData',
     async (url:string) =>{
         const {data} = await axios.get(url)
         return data 
