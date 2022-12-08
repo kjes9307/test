@@ -19,6 +19,7 @@ const Header = () =>{
   const location = useLocation()
   const navigate = useNavigate();
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    if(e.currentTarget.value === '') navigate(``)
     setSearch(e.currentTarget.value)
   }
   const {search:pathname} = location
@@ -97,7 +98,6 @@ const MainPage:FC<DataProps> =(props) =>{
 export const Sol2 = () =>{
     const loading = useSelector(state=>state.dataList.loading)
     const list = useSelector(state=>state.dataList.list)
-    // const endStr = useSelector(state=>state.dataList.endStr)
     const dispatch = useAppDispatch()   
     const location = useLocation()
     const {search} = location
