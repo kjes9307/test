@@ -16,17 +16,23 @@ const Header = () =>{
   const dispatch = useAppDispatch() 
   const [search,setSearch] = useState('')
   const delayVal = useDebounce(search,1000)
+  const location = useLocation()
   const navigate = useNavigate();
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
     setSearch(e.currentTarget.value)
   }
+  const {search:pathname} = location
+  useEffect(()=>{
+    if(pathname){
+      let value = pathname.split("=")[1]
+      setSearch(value)
+    }
+  },[])
   useEffect(()=>{
     console.log("@")
     if(delayVal !== '' ){
-      // let str = `http://localhost:3001/articles?country=${delayVal}`
       navigate(`?country=${delayVal}`)
       dispatch(listSlice.actions.onChangeNav(delayVal))
-      // dispatch(searchList(str))
     }
   },[delayVal,dispatch,navigate])
   return <input value={search} onChange = {handleChange}></input>
