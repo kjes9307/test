@@ -1,9 +1,10 @@
 import {useEffect,FC} from 'react'
-import {getListData} from 'redux/slice/listSlice'
+import {listSlice,getListData} from 'redux/slice/listSlice'
 import {useSelector,useAppDispatch} from 'redux/hook'
 import { Route, Routes } from "react-router";
-import { useUrlQueryParam } from 'utils/url';
+import { Link } from 'react-router-dom';
 import Icon from 'component/Icon';
+import { useUrlQueryParam } from 'utils/url';
 import {IconName} from '@fortawesome/fontawesome-common-types';
 import {Container,Row,Col,Card } from 'react-bootstrap'
 import {Datatype} from 'utils/type'
@@ -29,7 +30,7 @@ export const SideBar:FC<SideBarDataProps> = (props) =>{
                 
                 <li key={i.name} className='mt-1 d-flex align-items-center justify-content-center'>
                     <div><Icon icon={i.icon} color='black' size='1x' /></div>
-                    <p onClick={()=>{onChange(i.routes);}}>{i.name}</p>
+                    <Link to={i.routes} onClick={()=>{onChange(i.routes);}}>{i.name}</Link>
                 </li>
                 
             )})}
@@ -69,13 +70,18 @@ export const MainPage:FC<DataProps> =(props) =>{
 export const Sol2 = () =>{
     const loading = useSelector(state=>state.dataList.loading)
     const list = useSelector(state=>state.dataList.list)
+    const endStr = useSelector(state=>state.dataList.endStr)
+    const [param] = useUrlQueryParam(['country'])
+    console.log(param)
     const dispatch = useAppDispatch()   
     const onHandleNews = (val:string)=>{
+      console.log("@")
+      dispatch(listSlice.actions.onChangeNav(val))
     }
     useEffect(()=>{
-        let str= `http://localhost:3001/articles`
+        let str= !endStr?`http://localhost:3001/articles`:`http://localhost:3001/articles?country=${endStr}`
         dispatch(getListData(str))
-    },[])
+    },[endStr])
     if(loading){
         return <h1>....loading</h1>
     }

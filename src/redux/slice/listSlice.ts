@@ -16,9 +16,8 @@ const initialState:ListState ={
 }
 export const getListData = createAsyncThunk(
     'list/getData',
-    async (id:string) =>{
-        let str = id? `?${id}` : '' 
-        const {data} = await axios.get("http://localhost:3001/articles"+str)
+    async (url:string) =>{
+        const {data} = await axios.get(url)
         return data 
     }
 )

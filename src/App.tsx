@@ -13,7 +13,7 @@ function App() {
     <Provider store={store}>
 
     <div className="App">
-      <Sol2 />
+      <Sol />
     </div>
     </Provider>
   );

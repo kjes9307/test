@@ -1,5 +1,6 @@
 import { useState,useEffect} from 'react';
 import { Route, Routes } from "react-router";
+import { useNavigate ,Navigate } from "react-router-dom"
 import axios from 'axios';
 import { useUrlQueryParam } from 'utils/url';
 import {Datatype} from 'utils/type'
@@ -12,10 +13,16 @@ export const Sol = () =>{
     const [param,setParam] = useUrlQueryParam(['country'])
     // 這不是一個props就可以解決的?
     const [data,setData] = useState<Datatype[]|null>(null)
+    
     const onHandleNews = (val:string)=>{
       setParam({country:val})
     }
+    //https://newsapi.org/v2/top-headlines?country=tw&apiKey=dc01149c7c004404a03a135efd861e6e
     //top-headlines?country=tw&apiKey=dc01149c7c004404a03a135efd861e6e
+    // const navigate = useNavigate()
+    // useEffect(()=>{
+    //   navigate('articles')
+    // },[])
     useEffect(()=>{
       let str= `http://localhost:3001/articles`
       if(param.country) str+=`?country=${param.country}`
@@ -34,8 +41,8 @@ export const Sol = () =>{
           </Col>
           <Col md='10'> 
           <Routes>
-            <Route path='/:id' element={<MainPage data={data || []} />} ></Route>
-            <Route index element={<MainPage data={data || []} />} />
+            <Route path='/articles' element={<MainPage data={data || []} />} ></Route>
+            <Route index element={<Navigate to="/articles" replace={true} />} />
           </Routes>
           </Col>
         </Row>
