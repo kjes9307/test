@@ -3,8 +3,8 @@ interface httpConfig extends RequestInit{
     data?: object,
     token?: string
 }
-// const url = 'http://localhost:3001'
-const url = 'https://newsapi.org/v2'
+const url = 'http://localhost:3001'
+// const url = 'https://newsapi.org/v2'
 export const http = (endStr:string,{data,token,headers,...config}:httpConfig ={}) => {
     const initConfig = {
         method: 'GET',
@@ -21,6 +21,7 @@ export const http = (endStr:string,{data,token,headers,...config}:httpConfig ={}
       } else {
         initConfig.body = JSON.stringify(data || {});
       }
+      console.log(`${url}/${endStr}`)
     return window.fetch(`${url}/${endStr}`,initConfig)
     .then(async res=>{
       if (res.status === 401) {
@@ -30,7 +31,7 @@ export const http = (endStr:string,{data,token,headers,...config}:httpConfig ={}
 
       
       if (res.ok) {
-        const {data} = await res.json();
+        const data = await res.json();
         console.log(data)
         return data;
       }else{
