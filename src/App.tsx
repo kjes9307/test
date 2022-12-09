@@ -5,17 +5,20 @@ import {Sol} from 'component/solution1'
 import {Sol2} from 'component/solution2'
 import {Provider} from 'react-redux'
 import store from 'redux/store'
+import Sidebar from 'component/re-sidebar'
+import {Test} from 'component/testSide'
 library.add(fas)
 
 function App() {
  
   return (
-    <Provider store={store}>
+    <Sidebar />
+    // <Provider store={store}>
 
-    <div className="App">
-      <Sol2 />
-    </div>
-    </Provider>
+    // <div className="App">
+    //   <Sol2 />
+    // </div>
+    // </Provider>
   );
 }
 
