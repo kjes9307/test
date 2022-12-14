@@ -7,10 +7,11 @@ import {Provider} from 'react-redux'
 import store from 'redux/store'
 import Sidebar from 'component/re-sidebar'
 import {Test} from 'component/testSide'
+import {useScroll} from 'hooks/scroll'
 library.add(fas)
 
 function App() {
- 
+  const direction = useScroll()
   return (
     <Sidebar />
     // <Provider store={store}>
